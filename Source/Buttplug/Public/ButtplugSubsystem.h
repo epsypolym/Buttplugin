@@ -3,25 +3,13 @@
 
 #include "WebSocketsModule.h"
 #include "IWebSocket.h"
+#include "ButtplugDevice.h"
+
 #include "IWebSocketsManager.h"
 #include "ButtplugSubsystem.generated.h"
 
 
 
-USTRUCT()
-struct FDingle
-{
-	GENERATED_BODY()
-public:
-		UPROPERTY()
-		int Index;
-		UPROPERTY()
-		FString ActuatorType;
-		UPROPERTY()
-		double Scalar;
-	
-
-};
 
 
 UCLASS()
@@ -36,13 +24,20 @@ protected:
 public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
+
 	UFUNCTION(BlueprintCallable)
-	void GoButtplugGo(int Index, FString ActuatorType, double Scalar, int Id, int DeviceIndex);
+	void SendScalarCommand(int MessageId, int DeviceIndex, int ScalarIndex, FString ActuatorType, double Scalar);
+
+	//UFUNCTION(BlueprintCallable)
+	//void AddDeviceToDeviceList(FButtplugDevice device);
+	//void ConstructDeviceEntry(int deviceindex, FButtplugScalar scalars);
 	UFUNCTION(BlueprintCallable)
 	void ConnectToServer();
 
 	void Connected();
 
+	UFUNCTION(BlueprintCallable)
+	void AddDevice(int DeviceId, FString ActuatorType);
 	UFUNCTION(BlueprintCallable)
 	void Disconnect();
 //	UFUNCTION(BlueprintCallable)
